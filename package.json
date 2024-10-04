@@ -1,0 +1,47 @@
+{
+  "name": "@sisa/api-spec",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "yarn@4.5.0",
+  "scripts": {
+    "compile": "tsp compile ./src/specs --watch",
+    "mock": "prism mock ./src/docs/v1.yaml --dynamic --cors --port 10000",
+    "dev:vite": "vite --port 3000",
+    "dev": "run-p compile mock dev:vite",
+    "check:specs": "tsp format --check ./src/specs",
+    "format:specs": "tsp format ./src/specs/**/*.tsp",
+    "check:components": "biome check src",
+    "format:components": "biome check --apply src",
+    "check": "run-p check:specs check:components",
+    "format": "run-p format:specs format:components"
+  },
+  "dependencies": {
+    "@stoplight/elements": "^8.4.5",
+    "@typespec/http": "^0.60.0",
+    "@typespec/openapi": "^0.60.0",
+    "@typespec/openapi3": "^0.60.0",
+    "@typespec/rest": "^0.60.0",
+    "@typespec/versioning": "^0.60.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.3",
+    "@modyfi/vite-plugin-yaml": "^1.1.0",
+    "@stoplight/prism-cli": "^5.10.0",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "@typespec/compiler": "^0.60.1",
+    "@vitejs/plugin-react": "^4.3.2",
+    "eslint": "^9.11.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.12",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.8",
+    "vite-plugin-node-polyfills": "^0.22.0"
+  }
+}

@@ -1,0 +1,13 @@
+parameters:
+  base-dir:
+    default: "{cwd}"
+
+output-dir: "{base-dir}/src/docs"
+
+emit:
+  - "@typespec/openapi3"
+
+options:
+  "@typespec/openapi3":
+    emitter-output-dir: "{base-dir}/src/docs"
+    output-file: "{service-name}.{version}.yaml"

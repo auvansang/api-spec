@@ -1,0 +1,655 @@
+openapi: 3.0.0
+info:
+  title: Sisa Cafe
+  version: v2
+tags:
+  - name: Categories
+  - name: Tags
+  - name: Posts
+paths:
+  /blog/api/v1/categories:
+    get:
+      operationId: Categories_Get
+      parameters:
+        - name: keyword
+          in: query
+          required: false
+          schema:
+            type: string
+          explode: false
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+          explode: false
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+          explode: false
+      responses:
+        '200':
+          description: The request has succeeded.
+          headers:
+            x-pagination:
+              required: true
+              schema:
+                $ref: '#/components/schemas/Pagination'
+                type: string
+                format: json
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/V1.Categories.CategoryResponse'
+        '500':
+          description: Server error
+      tags:
+        - Categories
+  /blog/api/v1/categories/{id}:
+    put:
+      operationId: Categories_Update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/uuid'
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1.Categories.CategoryResponse'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+        '401':
+          description: Access is unauthorized.
+        '403':
+          description: Access is forbidden.
+        '404':
+          description: The server cannot find the requested resource.
+        '500':
+          description: Server error
+      tags:
+        - Categories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V1.Categories.UpdateCategoryRequest'
+    delete:
+      operationId: Categories_Delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/uuid'
+      responses:
+        '204':
+          description: 'There is no content to send for this request, but the headers may be useful. '
+        '404':
+          description: The server cannot find the requested resource.
+        '500':
+          description: Server error
+      tags:
+        - Categories
+  /blog/api/v1/categories/{id}/details:
+    get:
+      operationId: Categories_FindById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/uuid'
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1.Categories.CategoryResponse'
+        '404':
+          description: The server cannot find the requested resource.
+        '500':
+          description: Server error
+      tags:
+        - Categories
+  /blog/api/v1/categories/{slug}:
+    get:
+      operationId: Categories_FindBySlug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1.Categories.CategoryResponse'
+        '404':
+          description: The server cannot find the requested resource.
+        '500':
+          description: Server error
+      tags:
+        - Categories
+  /blog/api/v1/posts:
+    get:
+      operationId: Posts_Get
+      parameters:
+        - name: keyword
+          in: query
+          required: false
+          schema:
+            type: string
+          explode: false
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+          explode: false
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+          explode: false
+      responses:
+        '200':
+          description: The request has succeeded.
+          headers:
+            x-pagination:
+              required: true
+              schema:
+                $ref: '#/components/schemas/Pagination'
+                type: string
+                format: json
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/V1.Posts.PostResponse'
+        '500':
+          description: Server error
+      tags:
+        - Posts
+  /blog/api/v1/posts/{id}:
+    put:
+      operationId: Posts_Update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/uuid'
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1.Posts.PostResponse'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+        '401':
+          description: Access is unauthorized.
+        '403':
+          description: Access is forbidden.
+        '404':
+          description: The server cannot find the requested resource.
+        '500':
+          description: Server error
+      tags:
+        - Posts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V1.Posts.UpdatePostRequest'
+    delete:
+      operationId: Posts_Delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/uuid'
+      responses:
+        '204':
+          description: 'There is no content to send for this request, but the headers may be useful. '
+        '404':
+          description: The server cannot find the requested resource.
+        '500':
+          description: Server error
+      tags:
+        - Posts
+  /blog/api/v1/posts/{id}/details:
+    get:
+      operationId: Posts_FindById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/uuid'
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1.Posts.PostResponse'
+        '404':
+          description: The server cannot find the requested resource.
+        '500':
+          description: Server error
+      tags:
+        - Posts
+  /blog/api/v1/posts/{slug}:
+    get:
+      operationId: Posts_FindBySlug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1.Posts.PostResponse'
+        '404':
+          description: The server cannot find the requested resource.
+        '500':
+          description: Server error
+      tags:
+        - Posts
+  /blog/api/v1/tags:
+    get:
+      operationId: Tags_Get
+      parameters:
+        - name: keyword
+          in: query
+          required: false
+          schema:
+            type: string
+          explode: false
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+          explode: false
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+          explode: false
+      responses:
+        '200':
+          description: The request has succeeded.
+          headers:
+            x-pagination:
+              required: true
+              schema:
+                $ref: '#/components/schemas/Pagination'
+                type: string
+                format: json
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/V1.Tags.TagResponse'
+        '500':
+          description: Server error
+      tags:
+        - Tags
+  /blog/api/v1/tags/{id}:
+    put:
+      operationId: Tags_Update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/uuid'
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1.Tags.TagResponse'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+        '401':
+          description: Access is unauthorized.
+        '403':
+          description: Access is forbidden.
+        '404':
+          description: The server cannot find the requested resource.
+        '500':
+          description: Server error
+      tags:
+        - Tags
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V1.Tags.UpdateTagRequest'
+    delete:
+      operationId: Tags_Delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/uuid'
+      responses:
+        '204':
+          description: 'There is no content to send for this request, but the headers may be useful. '
+        '404':
+          description: The server cannot find the requested resource.
+        '500':
+          description: Server error
+      tags:
+        - Tags
+  /blog/api/v1/tags/{id}/details:
+    get:
+      operationId: Tags_FindById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/uuid'
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1.Tags.TagResponse'
+        '404':
+          description: The server cannot find the requested resource.
+        '500':
+          description: Server error
+      tags:
+        - Tags
+  /blog/api/v1/tags/{slug}:
+    get:
+      operationId: Tags_FindBySlug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V1.Tags.TagResponse'
+        '404':
+          description: The server cannot find the requested resource.
+        '500':
+          description: Server error
+      tags:
+        - Tags
+components:
+  schemas:
+    ApiVersions:
+      type: string
+      enum:
+        - v1
+        - v2
+    Pagination:
+      type: object
+      required:
+        - count
+        - page
+        - pageSize
+        - pageCount
+      properties:
+        count:
+          type: integer
+          format: int32
+          title: Total number of items
+          default: 0
+        page:
+          type: integer
+          format: int32
+          title: Page index, starting from 0
+          default: 0
+        pageSize:
+          type: integer
+          format: int32
+          title: Number of items per page
+          default: 10
+        pageCount:
+          type: integer
+          format: int32
+          title: Total number of pages
+          default: 0
+      title: Pagination model
+    V1.Categories.CategoryResponse:
+      type: object
+      required:
+        - id
+        - name
+        - slug
+      properties:
+        id:
+          $ref: '#/components/schemas/uuid'
+        name:
+          type: string
+          minLength: 4
+          maxLength: 100
+        slug:
+          type: string
+          minLength: 4
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+      title: Category of the post
+    V1.Categories.CreateCategoryRequest:
+      type: object
+      required:
+        - name
+        - slug
+      properties:
+        name:
+          type: string
+          minLength: 4
+          maxLength: 100
+        slug:
+          type: string
+          minLength: 4
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+      title: Create a new category
+    V1.Categories.UpdateCategoryRequest:
+      type: object
+      required:
+        - id
+        - name
+        - slug
+      properties:
+        id:
+          $ref: '#/components/schemas/uuid'
+        name:
+          type: string
+          minLength: 4
+          maxLength: 100
+        slug:
+          type: string
+          minLength: 4
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+      title: Update a category
+    V1.Posts.CreatePostRequest:
+      type: object
+      required:
+        - name
+        - slug
+      properties:
+        name:
+          type: string
+          minLength: 4
+          maxLength: 100
+        slug:
+          type: string
+          minLength: 4
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+      title: Create a new Post
+    V1.Posts.PostResponse:
+      type: object
+      required:
+        - id
+        - name
+        - slug
+      properties:
+        id:
+          $ref: '#/components/schemas/uuid'
+        name:
+          type: string
+          minLength: 4
+          maxLength: 100
+        slug:
+          type: string
+          minLength: 4
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+      title: Post of the post
+    V1.Posts.UpdatePostRequest:
+      type: object
+      required:
+        - id
+        - name
+        - slug
+      properties:
+        id:
+          $ref: '#/components/schemas/uuid'
+        name:
+          type: string
+          minLength: 4
+          maxLength: 100
+        slug:
+          type: string
+          minLength: 4
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+      title: Update a Post
+    V1.Tags.CreateTagRequest:
+      type: object
+      required:
+        - name
+        - slug
+      properties:
+        name:
+          type: string
+          minLength: 4
+          maxLength: 100
+        slug:
+          type: string
+          minLength: 4
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+      title: Create a new Tag
+    V1.Tags.TagResponse:
+      type: object
+      required:
+        - id
+        - name
+        - slug
+      properties:
+        id:
+          $ref: '#/components/schemas/uuid'
+        name:
+          type: string
+          minLength: 4
+          maxLength: 100
+        slug:
+          type: string
+          minLength: 4
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+      title: Tag of the post
+    V1.Tags.UpdateTagRequest:
+      type: object
+      required:
+        - id
+        - name
+        - slug
+      properties:
+        id:
+          $ref: '#/components/schemas/uuid'
+        name:
+          type: string
+          minLength: 4
+          maxLength: 100
+        slug:
+          type: string
+          minLength: 4
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+      title: Update a Tag
+    uuid:
+      type: string
+      format: uuid
+servers:
+  - url: http://localhost:10000
+    description: Sisa Cafe
+    variables: {}
